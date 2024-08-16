@@ -11,3 +11,7 @@
     table_name = one of the in the below list.
       
     ['bills', 'categories', 'courses', 'logged_hours', 'order_courses', 'option_groups', 'options', 'orders', 'products', 'tableplans', 'tables', 'reservations', 'reservationTypes', 'revenueGroups', 'tenant_paymentmethods']
+
+Note: This code runs in USA due to geograhic restrictions on API
+
+
