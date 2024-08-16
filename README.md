@@ -2,11 +2,13 @@
 
 # Data download from Winston API
 
-python data_download.py -a <apikey> -s <start_date> -e <end_date> -t <table_name>
+#### RUN cmd: python data_download.py -a <apikey> -s <start_date> -e <end_date> -t <table_name>
 
-apikey = For APIKEY, Please contact Paul
-start_date = Date should be ISO format eg: "2024-07-01" 
-end_date = Date should be ISO format eg: "2024-07-01" 
-table_name = one of the in the below list.
+#### Arguments:
 
-['bills', 'categories', 'courses', 'logged_hours', 'order_courses', 'option_groups', 'options', 'orders', 'products', 'tableplans', 'tables', 'reservations', 'reservationTypes', 'revenueGroups', 'tenant_paymentmethods']
+      apikey = For APIKEY, Please contact Paul
+      start_date = Date should be ISO format eg: "2024-07-01" 
+      end_date = Date should be ISO format eg: "2024-07-01" 
+      table_name = one of the in the below list.
+      
+      ['bills', 'categories', 'courses', 'logged_hours', 'order_courses', 'option_groups', 'options', 'orders', 'products', 'tableplans', 'tables', 'reservations', 'reservationTypes', 'revenueGroups', 'tenant_paymentmethods']
