@@ -5,7 +5,6 @@
 #### RUN cmd: python data_download.py -a <apikey> -s <start_date> -e <end_date> -t <table_name>
 
 #### Arguments:
-
       apikey = For APIKEY, Please contact Paul
       start_date = Date should be ISO format eg: "2024-07-01" 
       end_date = Date should be ISO format eg: "2024-07-01" 
