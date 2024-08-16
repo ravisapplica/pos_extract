@@ -13,10 +13,7 @@ def generate_date_range(start_date, end_date):
 
     while present_date <= end:
         date_list.append(present_date.strftime("%Y-%m-%d"))
-        #"%Y-%m-%dT%HH:%MM:%SZ"
         present_date += timedelta(days=1)
-        #print(date_list)
-
     return date_list
 
 def get_data(url, business_day, api_key):
@@ -72,7 +69,6 @@ if __name__ == "__main__":
             os.mkdir(folder)
             
         print(f"Getting data for business day {date}")
-        #data = None
         
         data = get_data(url=f"{host}/{tab}", business_day=date, api_key=api_key)
         
