@@ -14,6 +14,7 @@ def generate_date_range(start_date, end_date):
     while present_date <= end:
         date_list.append(present_date.strftime("%Y-%m-%d"))
         present_date += timedelta(days=1)
+
     return date_list
 
 def get_data(url, business_day, api_key):
@@ -37,9 +38,10 @@ def get_data(url, business_day, api_key):
         print(f"Error fetching data for {business_day}: {e}")
         return None
 
+def flatten_nested_dicts(row):
+    return pd.json_normalize(row)
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description="Extract data from API and save as CSV")
     parser.add_argument('-a', '--apikey', type=str, required=True, help="API key for authentication")
     parser.add_argument('-s', '--startdate', type=str, required=True, help="Start date in YYYY-MM-DD format")
@@ -58,20 +60,20 @@ if __name__ == "__main__":
 
     normal_dates = []
     missing_dates = []
-    
-    start = time.time() 
+
+    start = time.time()
 
     for date in dates:
         file_date = date.replace('-', '')
         folder = f"{tab}/{file_date[:6]}"
-        
+
         if not os.path.exists(os.path.join(os.getcwd(), folder)):
             os.mkdir(folder)
-            
+
         print(f"Getting data for business day {date}")
-        
+
         data = get_data(url=f"{host}/{tab}", business_day=date, api_key=api_key)
-        
+
         if data is not None:
             df = pd.DataFrame(data)
             filename = f"{folder}/{tab}_{file_date}_bday.csv"
@@ -90,8 +92,7 @@ if __name__ == "__main__":
 
     failed = pd.DataFrame(missing_dates, columns=['failed'])
     failed.to_csv(f"{tab}_{start_date.replace('-', '')}_{end_date.replace('-', '')}_missing_dates.csv", index=False)
-    end = time.time() 
+    end = time.time()
     print(f"Time taken to get data: {end - start} seconds")
 
 
-   
