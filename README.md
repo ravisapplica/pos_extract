@@ -17,7 +17,12 @@ Note: This code runs in USA due to geograhic restrictions on API
 
 ## Use this command format to upload local files from your machine to S3 folder.
 
-python parquetfileupload.py  -a <LocalFolder till file directory> -s <bucketName> -e <S3Folder till before table path>
+#### Arguments:
+    LocalFolder = LocalFolder till file directory
+    bucketName = S3 bucket name
+    S3Folder = S3Folder till before table path
+
+#### RUN cmd: python parquetfileupload.py  -a <LocalFolder> -s <bucketName> -e <S3Folder>
 
 
 
