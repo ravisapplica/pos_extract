@@ -9,14 +9,21 @@ Original file is located at
 
 import boto3
 import os
+import argparse
+
 
 def upload_folder_to_s3(local_folder, bucket_name, s3_folder):
-    s3_client = boto3.client('s3')
+    session = boto3.Session(profile_name='EngineerRole')
+    s3_client = session.client('s3')
     for root, dirs, files in os.walk(local_folder):
+        print(f"List of files to be uploaded: {files}")
         for file in files:
             local_path = os.path.join(root, file)
-            relative_path = os.path.relpath(local_path, local_folder)
-            s3_path = os.path.join(s3_folder, relative_path).replace("\\", "/")
+            file_details = file.split("_")
+            table_name = file_details[0]
+            year = file_details[1][:4]
+            month = file_details[1][4:6]
+            s3_path = f"{s3_folder}/{table_name}/year={year}/month={month}/{file}"
             try:
                 s3_client.upload_file(local_path, bucket_name, s3_path)
                 print(f"Uploaded {local_path} to s3://{bucket_name}/{s3_path}")
@@ -24,10 +31,20 @@ def upload_folder_to_s3(local_folder, bucket_name, s3_folder):
                 print(f"Error uploading {local_path}: {e}")
 
 
-local_folder = r'C:\Users\abhay\OneDrive\Desktop\Sapplica Files\parquet_output'
-bucket_name = 'posdata-storage'
-s3_folder = ''
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Extract data from API and save as CSV")
+    parser.add_argument('-a', '--localfolder', type=str, required=True, help="path of your local folder to be uploaded")
+    parser.add_argument('-s', '--bucketname', type=str, required=True, help="name of the s3 bucket")
+    parser.add_argument('-e', '--s3folder', type=str, required=True, help="folder in s3")
+
+    args = parser.parse_args()
+    print("Uploading the input folder path to S3 bucket")
+    local_folder = args.localfolder
+    bucket_name = args.bucketname
+    s3_folder = args.s3folder
+    upload_folder_to_s3(local_folder, bucket_name, s3_folder)
+    print("Successfully Uploaded")
 
 
-upload_folder_to_s3(local_folder, bucket_name, s3_folder)
+
 
